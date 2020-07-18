@@ -6,7 +6,12 @@ public class ForceField : MonoBehaviour
 {
 
     [SerializeField] private FireColour FireColour;
+    private ScoreTracker ScoreTracker;
 
+    private void Start()
+    {
+        ScoreTracker = FindObjectOfType<ScoreTracker>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +26,7 @@ public class ForceField : MonoBehaviour
             return;
         }
 
+        ScoreTracker.IncreaseScore();
         Destroy(fb.gameObject);
     }
     
