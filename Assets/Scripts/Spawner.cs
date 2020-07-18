@@ -9,8 +9,6 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private GameObject RedFireballPrefab;
     [SerializeField] private GameObject BlueFireballPrefab;
-    [SerializeField] private Material RedMat;
-    [SerializeField] private Material BlueMat;
     [SerializeField] private float WaitTime = 1f;
     [SerializeField] private float SpeedUpTime = 0.1f;
     [SerializeField] private int SpeedUpEvery = 10;
@@ -22,12 +20,8 @@ public class Spawner : MonoBehaviour
 
 
 
-    // Create a Random object  
     private System.Random rand = new System.Random();
-    // Generate a random index less than the size of the array.  
- 
 
-    // Start is called before the first frame update
     void Start()
     {
         TargetedTiles = new HashSet<Tile>();
@@ -65,9 +59,7 @@ public class Spawner : MonoBehaviour
                 fb.FireColour = FireColour.BLUE;
                 fb.gameObject.layer = 8; // blue
                 TargetTile.Fireball = fb;
-
             }
-
 
             fb.OnDestruction += () =>
             {
@@ -77,7 +69,6 @@ public class Spawner : MonoBehaviour
             if (count % SpeedUpEvery == 0) {
                 ActiveWaitTime -=SpeedUpTime;
                 SpeedUpEvery *= 2;
-                //SpeedUpEvery = Mathf.FloorToInt(SpeedUpEvery * SpeedUpTime);
             }
             yield return new WaitForSeconds(ActiveWaitTime);
         }

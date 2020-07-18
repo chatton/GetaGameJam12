@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireColour: 0
+  ExplisionPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c,
+    type: 3}
 --- !u!114 &5399297001080063592
 MonoBehaviour:
   m_ObjectHideFlags: 0
