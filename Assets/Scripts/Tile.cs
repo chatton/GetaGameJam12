@@ -7,12 +7,7 @@ public class Tile : MonoBehaviour
 
     public Fireball Fireball; // the Fireball coming towards us!
 
-    private Light Light;
-
-    void Start()
-    {
-        Light = GetComponentInChildren<Light>();
-    }
+    [SerializeField] private Light Light;
 
     void Update()
     {

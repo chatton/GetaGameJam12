@@ -7,7 +7,8 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 
-    [SerializeField] private GameObject FireballPrefab;
+    [SerializeField] private GameObject RedFireballPrefab;
+    [SerializeField] private GameObject BlueFireballPrefab;
     [SerializeField] private Material RedMat;
     [SerializeField] private Material BlueMat;
     [SerializeField] private float WaitTime = 1f;
@@ -40,25 +41,27 @@ public class Spawner : MonoBehaviour
             }
             TargetedTiles.Add(TargetTile);
             Vector3 TargetPosition = TargetTile.transform.position;
-            GameObject go = Instantiate(FireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 10, TargetPosition.z), Quaternion.identity);
-            Fireball fb = go.GetComponentInChildren<Fireball>();
+
+            Fireball fb;
             if (rand.Next(2) == 0)
             {
-                go.GetComponentInChildren<Renderer>().material = RedMat;
+                GameObject go = Instantiate(RedFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 10, TargetPosition.z), Quaternion.identity);
+                fb = go.GetComponentInChildren<Fireball>();
                 fb.FireColour = FireColour.RED;
                 fb.gameObject.layer = 9; // red
                 TargetTile.Fireball = fb;
-   
+
             }
             else {
-                go.GetComponentInChildren<Renderer>().material = BlueMat;
+                GameObject go = Instantiate(BlueFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 10, TargetPosition.z), Quaternion.identity);
+                fb = go.GetComponentInChildren<Fireball>();
                 fb.FireColour = FireColour.BLUE;
                 fb.gameObject.layer = 8; // blue
                 TargetTile.Fireball = fb;
 
             }
 
-           
+
             fb.OnDestruction += () =>
             {
                 TargetedTiles.Remove(TargetTile);
