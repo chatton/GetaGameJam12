@@ -11,8 +11,11 @@ public class Tile : MonoBehaviour
 
     void Update()
     {
+        Light.gameObject.SetActive(Fireball != null); 
         Light.enabled = Fireball != null;
-
+       
+        if (Fireball != null) {
+        }
         if (Fireball != null) {
             if (Fireball.FireColour == FireColour.BLUE)
             {

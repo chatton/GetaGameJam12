@@ -15,17 +15,17 @@ public class Fireball : MonoBehaviour
         Spawner = FindObjectOfType<Spawner>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
+        Tile tile = other.gameObject.GetComponent<Tile>();
 
-        Tile tile = collision.gameObject.GetComponent<Tile>();
-
-        if (tile == null) {
+        if (tile == null)
+        {
             return;
         }
 
         Spawner.UnRegisterTile(tile);
-        Destroy(collision.gameObject);
+        Destroy(other.gameObject);
     }
 
     private void OnDestroy()

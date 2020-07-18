@@ -7,19 +7,21 @@ public class ForceField : MonoBehaviour
 
     [SerializeField] private FireColour FireColour;
 
-    private void OnCollisionEnter(Collision collision)
-    {
 
-        Fireball fb = collision.gameObject.GetComponent<Fireball>();
-        if (fb == null) {
+    private void OnTriggerEnter(Collider other)
+    {
+        Fireball fb = other.gameObject.GetComponent<Fireball>();
+        if (fb == null)
+        {
             return;
         }
 
-        if (fb.FireColour != FireColour) {
+        if (fb.FireColour != FireColour)
+        {
             return;
         }
 
         Destroy(fb.gameObject);
-       
     }
+    
 }

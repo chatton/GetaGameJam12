@@ -12,6 +12,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Material RedMat;
     [SerializeField] private Material BlueMat;
     [SerializeField] private float WaitTime = 1f;
+    [SerializeField] private float SpeedUpTime = 0.1f;
+    [SerializeField] private int SpeedUpEvery = 10;
+
+    private float ActiveWaitTime;
     private Level Level;
     private List<Tile> Tiles;
     private HashSet<Tile> TargetedTiles;
@@ -29,11 +33,14 @@ public class Spawner : MonoBehaviour
         TargetedTiles = new HashSet<Tile>();
         Level = FindObjectOfType<Level>();
         Tiles = Level.GetAllTiles();
+        ActiveWaitTime = WaitTime;
         StartCoroutine(SpawnFireballs());
+
     }
 
 
     IEnumerator SpawnFireballs() {
+        int count = 0;
         while (Tiles.Count > 0) {
             Tile TargetTile = GetRandomTargetableTile();
             if (TargetTile == null) {
@@ -66,7 +73,13 @@ public class Spawner : MonoBehaviour
             {
                 TargetedTiles.Remove(TargetTile);
             };
-            yield return new WaitForSeconds(WaitTime);
+            count++;
+            if (count % SpeedUpEvery == 0) {
+                ActiveWaitTime -=SpeedUpTime;
+                SpeedUpEvery *= 2;
+                //SpeedUpEvery = Mathf.FloorToInt(SpeedUpEvery * SpeedUpTime);
+            }
+            yield return new WaitForSeconds(ActiveWaitTime);
         }
     }
 
