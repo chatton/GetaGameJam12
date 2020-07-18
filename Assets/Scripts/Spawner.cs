@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
@@ -13,11 +14,14 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float SpeedUpTime = 0.1f;
     [SerializeField] private int SpeedUpEvery = 10;
 
+    public event Action OnGameEnd;
+
     private float ActiveWaitTime;
     private Level Level;
     private List<Tile> Tiles;
     private HashSet<Tile> TargetedTiles;
 
+    
 
 
     private System.Random rand = new System.Random();
@@ -33,12 +37,16 @@ public class Spawner : MonoBehaviour
     }
 
 
+
     IEnumerator SpawnFireballs() {
         int count = 0;
         while (Tiles.Count > 0) {
             Tile TargetTile = GetRandomTargetableTile();
             if (TargetTile == null) {
+
+                FindObjectOfType<GameEnder>().EndGame();
                 break;
+
             }
             TargetedTiles.Add(TargetTile);
             Vector3 TargetPosition = TargetTile.transform.position;
@@ -46,7 +54,7 @@ public class Spawner : MonoBehaviour
             Fireball fb;
             if (rand.Next(2) == 0)
             {
-                GameObject go = Instantiate(RedFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 10, TargetPosition.z), Quaternion.identity);
+                GameObject go = Instantiate(RedFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 20, TargetPosition.z), Quaternion.identity);
                 fb = go.GetComponentInChildren<Fireball>();
                 fb.FireColour = FireColour.RED;
                 fb.gameObject.layer = 9; // red
@@ -54,7 +62,7 @@ public class Spawner : MonoBehaviour
 
             }
             else {
-                GameObject go = Instantiate(BlueFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 10, TargetPosition.z), Quaternion.identity);
+                GameObject go = Instantiate(BlueFireballPrefab, new Vector3(TargetPosition.x, TargetPosition.y + 20, TargetPosition.z), Quaternion.identity);
                 fb = go.GetComponentInChildren<Fireball>();
                 fb.FireColour = FireColour.BLUE;
                 fb.gameObject.layer = 8; // blue
@@ -68,6 +76,7 @@ public class Spawner : MonoBehaviour
             count++;
             if (count % SpeedUpEvery == 0) {
                 ActiveWaitTime -=SpeedUpTime;
+                ActiveWaitTime = Mathf.Max(ActiveWaitTime, 0.5f);
                 SpeedUpEvery *= 2;
             }
             yield return new WaitForSeconds(ActiveWaitTime);

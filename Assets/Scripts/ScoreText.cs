@@ -22,4 +22,8 @@ public class ScoreText : MonoBehaviour
         Text.text = "Score: " + ScoreTracker.Score;
     }
 
+    public void PlayAnimation() {
+
+    }
+
 }

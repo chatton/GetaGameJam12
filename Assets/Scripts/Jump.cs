@@ -20,10 +20,10 @@ public class Jump : MonoBehaviour
     }
 
 
-
     void Update()
     {
-        isGrounded = Mathf.Approximately(rb.transform.position.y, rigidBodyY);
+        //isGrounded = Mathf.Approximately(rb.transform.position.y, rigidBodyY);
+        isGrounded = rb.transform.position.y < 0.5 && rb.transform.position.y > 0;
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(jump * jumpForce, ForceMode.Impulse);

@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ForceFieldActivator : MonoBehaviour
 {
 
     [SerializeField] GameObject RedForceField;
     [SerializeField] GameObject BlueForceField;
+
+    public event Action OnCast;
+    public event Action OnStopCast;
 
     // Update is called once per frame
     void Update()
@@ -19,6 +23,7 @@ public class ForceFieldActivator : MonoBehaviour
         if (BlueActive) {
             BlueForceField.SetActive(true);
             RedForceField.SetActive(false);
+            OnCast?.Invoke();
             return;
         }
 
@@ -27,10 +32,12 @@ public class ForceFieldActivator : MonoBehaviour
         {
             BlueForceField.SetActive(false);
             RedForceField.SetActive(true);
+            OnCast?.Invoke();
             return;
         }
 
 
+        OnStopCast?.Invoke();
         BlueForceField.SetActive(false);
         RedForceField.SetActive(false);
     }
