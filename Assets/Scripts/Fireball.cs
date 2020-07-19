@@ -8,6 +8,7 @@ public class Fireball : MonoBehaviour
     public FireColour FireColour;
     private ScoreTracker ScoreTracker;
     [SerializeField] GameObject ExplisionPrefab;
+    [SerializeField] AudioClip[] Sounds;
 
     public Action OnDestruction { get; internal set; }
 
@@ -38,6 +39,8 @@ public class Fireball : MonoBehaviour
     private void OnDestroy()
     {
 
+        int index = UnityEngine.Random.Range(0, Sounds.Length);
+        AudioSource.PlayClipAtPoint(Sounds[index], Camera.main.transform.position);
         if (FireColour == FireColour.RED)
         {
             Destroy(Instantiate(ExplisionPrefab, transform.position + Vector3.down, Quaternion.identity), 2f);

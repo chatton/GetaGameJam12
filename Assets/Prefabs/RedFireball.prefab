@@ -102,6 +102,10 @@ MonoBehaviour:
   FireColour: 0
   ExplisionPrefab: {fileID: 2400458364666787113, guid: a6bca4921890f4129bd566c292b4647c,
     type: 3}
+  Sounds:
+  - {fileID: 8300000, guid: f18867fa3fe074dd8ae1ef917eda85d5, type: 3}
+  - {fileID: 8300000, guid: fe62f7a5b62ee40f6b8d1eee6a8d54b1, type: 3}
+  - {fileID: 8300000, guid: 006c08579cf6143779db19f8c6ed5da0, type: 3}
 --- !u!114 &1402232287999728143
 MonoBehaviour:
   m_ObjectHideFlags: 0
